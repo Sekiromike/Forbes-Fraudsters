@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forbes 30 Under 30: The Prison Pipeline (You're Welcome, Society) 🏆</title>
+  <meta name="description" content="A completely unnecessary deep-dive into how a magazine's annual 'look at these brilliant young geniuses' list became the FBI's most reliable talent pipeline. We built this so you don't have to feel alone in your despair." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<header class="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      📰 Investigative Journalism (The Depressing Kind) · Updated Feb 2026
+    </div>
+    <h1>Congrats on your <span>Forbes 30 Under 30</span>!<br/>See You in Court.</h1>
+    <p class="hero-sub">
+      Every year, a prestigious business magazine looks at 100,000 nominations and thinks: <em>"yes, THIS is one of the greatest entrepreneurial minds of a generation."</em> And every year, a startling number of those minds turn out to be running what the DOJ politely calls a "wire fraud conspiracy." We made a whole dashboard about it. We have feelings about this.
+    </p>
+    <div class="hero-kpis">
+      <div class="kpi-card" title="Cool cool cool. Totally normal number.">
+        <div class="kpi-value" id="kpi-total-fraud">$63.4B+</div>
+        <div class="kpi-label">Stolen / Evaporated / "Misplaced"</div>
+      </div>
+      <div class="kpi-card" title="Each one was described as 'a visionary.' Every single one.">
+        <div class="kpi-value amber" id="kpi-individuals">27+</div>
+        <div class="kpi-label">Certified Geniuses™ Profiled</div>
+      </div>
+      <div class="kpi-card" title="The magazine's vetting process is described as 'rigorous.' We checked.">
+        <div class="kpi-value white" id="kpi-convicted">16</div>
+        <div class="kpi-label">Actual Criminal Convictions</div>
+      </div>
+      <div class="kpi-card" title="Living their best life, just not where they expected.">
+        <div class="kpi-value purple" id="kpi-avg-sentence">7.2 yrs</div>
+        <div class="kpi-label">Avg. Sentence (in a Real Prison)</div>
+      </div>
+      <div class="kpi-card" title="For every $1 of legitimate business, there were $3.50 of federal crimes. Efficient!">
+        <div class="kpi-value" style="color:#8b5cf6">3.5×</div>
+        <div class="kpi-label">Fraud vs. Legit VC Raised</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════
+     NAV TABS
+══════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <button class="nav-tab active" data-tab="dashboard">😔 The Damage</button>
+    <button class="nav-tab" data-tab="directory">🏆 The "Visionaries"</button>
+    <button class="nav-tab" data-tab="charts">📊 Charts of Doom</button>
+    <button class="nav-tab" data-tab="timeline">📅 A History of Oops</button>
+    <button class="nav-tab" data-tab="analysis">🧠 Why Though</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════ -->
+<main class="main">
+
+  <!-- ── DASHBOARD ── -->
+  <section id="dashboard" class="section active">
+    <div class="section-header">
+      <h2 class="section-title">The Situation (It's Bad)</h2>
+      <p class="section-desc">
+        Since 2011, Forbes has been running a prestigious annual list to identify the next generation of industry titans. Somewhere along the way it also became a remarkably efficient funnel into federal court. We're not saying it's a scam detector — but we're not <em>not</em> saying that either.
+      </p>
+    </div>
+
+    <div class="callout">
+      <strong>The Part That Should Bother You:</strong> Forbes 30 Under 30 alumni raised ~$5.3B in legitimate venture capital. They were then arrested for or implicated in frauds totalling over <strong>$63.4B</strong>. That's a <strong>3.5× fraud-to-funding ratio</strong> — meaning for every dollar a Forbes-blessed founder legitimately raised, they were accused of stealing three-fifty. A magazine. Did this. By giving people cover art.
+    </div>
+
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">📈 Cases per List Year (a Growing Problem)</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="chart-timeline"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">🏢 Which Industry Gets to Be the Worst</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="chart-sector"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">⚖️ Current Legal Situation (Fine. Everything is Fine.)</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="chart-status"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">🌍 It's a Global Brand, Actually</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="chart-region"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="analysis-grid">
+      <div class="analysis-card" title="He gave it a cool name though. 'Terra Luna.' Sounds like a spa.">
+        <div class="analysis-number">$40B</div>
+        <h3>Biggest Single "Oopsie" 💥</h3>
+        <p>Do Kwon's Terra/Luna stablecoin — which actual analysts publicly called an unsustainable death spiral, to no avail — vaporized ~$40 billion in days. Forbes called him a visionary in 2019. The SEC called him something else entirely. Both were right, just at different times.</p>
+      </div>
+      <div class="analysis-card" title="She also wrote Forbes articles about cybercrime while actively laundering billions. Chef's kiss.">
+        <div class="analysis-number" style="color:var(--amber)">$4.5B</div>
+        <h3>Best Irony in Financial Crime 🎭</h3>
+        <p>While laundering $4.5B in stolen Bitfinex bitcoin, Heather Morgan published a Forbes article titled <em>"Experts Share Tips To Protect Your Business From Cybercriminals."</em> She described herself as an expert in "persuasion and social engineering." At least she was honest about one thing.</p>
+      </div>
+      <div class="analysis-card" title="He was charging for screens. SCREENS THAT DID NOT EXIST.">
+        <div class="analysis-number" style="color:var(--purple)">$1B</div>
+        <h3>Most Creative Billing Scheme 🖥️</h3>
+        <p>Rishi Shah at Outcome Health invoiced pharma giants for advertising on a network of medical screens far larger than actually existed. A $5.6B valuation! For fake screens! In doctors' waiting rooms! We really do live in a society.</p>
+      </div>
+      <div class="analysis-card" title="We sincerely hope the Forbes team had a good weekend before the indictment dropped.">
+        <div class="analysis-number" style="color:#3b82f6">~48h</div>
+        <h3>Forbes-to-Felony Speed Record ⚡</h3>
+        <p>Gökçe Güven was published on the 2025 Forbes 30 Under 30 list and then indicted for a $7M fraud shortly after. This is the franchise speed-running its own bit. The ink was barely dry. The trophy wasn't even mounted yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DIRECTORY ── -->
+  <section id="directory" class="section">
+    <div class="section-header">
+      <h2 class="section-title">The Honored "Visionaries" 🏆</h2>
+      <p class="section-desc">27 individuals who wore the Forbes badge like a suit of armor against basic financial regulation. Each was described somewhere, by someone, as "a disruptive force in their industry." They were not wrong. Click any card for the full tragicomedy.</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <span class="filter-label">Legal Vibe</span>
+      <button class="filter-btn active" data-filter="all">All of Them 😩</button>
+      <button class="filter-btn" data-filter="convicted">Definitely Did It</button>
+      <button class="filter-btn" data-filter="indicted">Allegedly Did It</button>
+      <button class="filter-btn" data-filter="alleged">"Vigorous Denial" Phase</button>
+    </div>
+    <div class="filters">
+      <span class="filter-label">Region</span>
+      <button class="filter-btn active" data-region="all">🌍 Worldwide Disaster</button>
+      <button class="filter-btn" data-region="USA">🇺🇸 USA (Home of the Brave)</button>
+      <button class="filter-btn" data-region="Europe">🇪🇺 Europe</button>
+      <button class="filter-btn" data-region="Asia">🌏 Asia</button>
+      <button class="filter-btn" data-region="Africa">🌍 Africa</button>
+      <button class="filter-btn" data-region="International">🛂 International Waters</button>
+    </div>
+    <div class="filters">
+      <div class="search-wrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" id="search-input" placeholder="Search by name, crime, or black turtleneck brand…" />
+      </div>
+    </div>
+
+    <div class="table-controls">
+      <div class="results-count" id="results-count">Showing <strong>27</strong> of 27 individuals</div>
+      <div class="view-toggle">
+        <button class="view-btn active" data-view="grid" title="Grid view">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+          </svg>
+        </button>
+        <button class="view-btn" data-view="table" title="Table view">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/>
+            <line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div id="cards-container" class="fraudster-grid"></div>
+
+    <!-- Table -->
+    <div id="table-wrap" class="table-wrap" style="display:none">
+      <table>
+        <thead>
+          <tr>
+          <th data-sort="name">Certified Genius 🏆 <span class="sort-icon">↕</span></th>
+            <th data-sort="year">Honored <span class="sort-icon">↕</span></th>
+            <th data-sort="category">"Industry" <span class="sort-icon">↕</span></th>
+            <th data-sort="region">Region <span class="sort-icon">↕</span></th>
+            <th data-sort="fraudAmount">Financial Damage <span class="sort-icon">↓</span></th>
+            <th data-sort="legalStatus">Current Vibe <span class="sort-icon">↕</span></th>
+            <th data-sort="sentence">Sentence <span class="sort-icon">↕</span></th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── CHARTS ── -->
+  <section id="charts" class="section">
+    <div class="section-header">
+      <h2 class="section-title">Charts of Doom 📊</h2>
+      <p class="section-desc">We turned billions of dollars of financial crime into pretty bar graphs because apparently that's what it takes for people to take this seriously. Hover for tooltips. Feel free to cry at any point.</p>
+    </div>
+    <div class="charts-grid">
+      <div class="chart-card wide">
+        <div class="chart-title">🏆 Top 10 Biggest Frauds — Your "Disruptors" at Work</div>
+        <div class="chart-canvas-wrap tall">
+          <canvas id="chart-top10"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="callout">
+      <strong>Fun Charts Fact (not fun):</strong> The top 3 frauds — Do Kwon ($40B), Heather Morgan ($4.5B), and Sam Bankman-Fried ($8B) — are responsible for over <strong>83%</strong> of the total damage. All three were crypto. All three were celebrated by major media outlets. All three involved people who wore extremely confident expressions in profile photos. If your pitch deck uses the word "ecosystem," we're watching you.
+    </div>
+    <div class="analysis-grid">
+      <div class="analysis-card">
+        <div class="analysis-number">59%</div>
+        <h3>Actually Convicted in Court</h3>
+        <p>More than half have been formally found guilty by a jury of their peers — peers who presumably did not invest $170 million in them based on vibes and a pitch deck. The rest are in various exciting earlier stages of the justice system.</p>
+      </div>
+      <div class="analysis-card">
+        <div class="analysis-number" style="color:var(--amber)">4</div>
+        <h3>Currently Awaiting Trial 🍿</h3>
+        <p>As of February 2026, at least four alumni face active federal indictments. Including Gökçe Güven, who made the 2025 list and was indicted shortly after. The Forbes certificate was presumably not submitted as evidence of good character.</p>
+      </div>
+      <div class="analysis-card">
+        <div class="analysis-number" style="color:var(--blue)">6</div>
+        <h3>"Blockchain Will Fix It" Cases</h3>
+        <p>Six of 27 cases are crypto-native, accounting for 83%+ of total harm. The sector's founding philosophy of "no rules, no oversight, no adults" turned out to be a feature for fraudsters and a bug for everyone who put their savings in. Who could have predicted! Everyone. Everyone predicted it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TIMELINE ── -->
+  <section id="timeline" class="section">
+    <div class="section-header">
+      <h2 class="section-title">A Brief History of Incredibly Avoidable Mistakes 📅</h2>
+      <p class="section-desc">Fourteen years of Forbes celebrating future defendants. Yellow dots are when the magazine clapped. Red dots are when the FBI clapped. There are a lot of both. Scroll down and feel your faith in institutional validation crumble in real time.</p>
+    </div>
+    <div class="timeline-legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--purple)"></div>
+        <span>Forbes Milestone (🥳 for them)</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--amber)"></div>
+        <span>Notable Honoree Added</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--red)"></div>
+        <span>Fraud / Collapse Detected</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--green)"></div>
+        <span>Legal Consequences (🎉 for society)</span>
+      </div>
+    </div>
+    <div class="timeline" id="timeline-container"></div>
+  </section>
+
+  <!-- ── ANALYSIS ── -->
+  <section id="analysis" class="section">
+    <div class="section-header">
+      <h2 class="section-title">So. Why. Though. 🧠</h2>
+      <p class="section-desc">Six reasons why the smartest financial institutions on earth kept giving billions of dollars to people who were, in some cases, literally running Excel-powered confetti machines and calling it a unicorn. (We are not better than this. We are going to do it again.)</p>
+    </div>
+
+    <div class="callout">
+      <strong>Forbes' Official Defense:</strong> The magazine cited a 99.9% "success rate" across 10,000+ honorees. The 0.1% in question? Responsible for <strong>$63+ billion</strong> in fraud — more than the GDP of several nations. By that logic, the Titanic had a 99.99% <em>deck-survival</em> rate. Most of the deck was fine! The deck was great. We're focusing on the wrong thing.
+    </div>
+
+    <div class="analysis-grid" style="margin-bottom:28px">
+      <div class="analysis-card">
+        <div class="analysis-number" style="font-size:1.8rem">01</div>
+        <h3>Free Money Brain Rot (The ZIRP Era) 🧻</h3>
+        <p>From 2012 to 2022, interest rates were basically zero, which meant institutional money had nowhere to go except into the hands of charismatic twentysomethings with decks full of graphs going up and to the right. Due diligence was a vibe. Charlie Javice made a fake list of 4 million students on a $18,000 bounty from a data professor. JP Morgan Chase — the largest bank in America — bought it for $175 million. We have nothing more to add.</p>
+      </div>
+      <div class="analysis-card">
+        <div class="analysis-number" style="font-size:1.8rem">02</div>
+        <h3>"Fake It Till You Make It" Was Not a Joke 🎭</h3>
+        <p>Silicon Valley told a generation of founders: pretend to be bigger than you are and the money will make it real. This is fine advice until "bigger than you are" means "four million users you invented" or "$100M ARR that is actually $15M and we are going to prison." The market rewarded scale metrics over revenue metrics, so the logical move was to fabricate scale metrics. We did this. We as a society. We are the problem.</p>
+      </div>
+      <div class="analysis-card">
+        <div class="analysis-number" style="font-size:1.8rem">03</div>
+        <h3>The Magazine Said It Was Fine 📰</h3>
+        <p>Forbes put them on a list. VCs used the list as a substitute for doing their jobs. Forbes used VC backing as a criterion for the list. Nobody audited anything. JP Morgan acquired a company for $175M based on a spreadsheet of fake names. SoftBank gave $170M to a social app without verifying it had any real users. This is due diligence in the modern era: Google the founder, see Forbes cover, wire the money. We built a whole economy on this.</p>
+      </div>
+      <div class="analysis-card">
+        <div class="analysis-number" style="font-size:1.8rem">04</div>
+        <h3>Staying Private Indefinitely Is a Feature 🛡️</h3>
+        <p>Public companies must file audited financials with the SEC. Private companies must file nothing except their vibes and a pitch deck. Rishi Shah built a $5.6B pharma advertising empire on screens that didn't exist — and operated for years before anyone checked. In a previous era, going public would have required showing an auditor the screens. The screens were not there. Nobody checked for the screens.</p>
+      </div>
+      <div class="analysis-card">
+        <div class="analysis-number" style="font-size:1.8rem">05</div>
+        <h3>Black Turtleneck + Drop-out Backstory = Genius 🖤</h3>
+        <p>Bill Gates dropped out of Harvard. Steve Jobs wore a turtleneck. Mark Zuckerberg was rude at meetings. Therefore: any young founder who is rude, dropped out, and wears minimalist clothing must be the next billionaire. This psychological shortcut — which Forbes literally monetizes as a franchise — let people like Bankman-Fried and Shkreli be erratic, dishonest, and openly contemptuous of rules and get more funding each time. "That's just how geniuses are." It was not.</p>
+      </div>
+      <div class="analysis-card">
+        <div class="analysis-number" style="font-size:1.8rem;color:var(--amber)">06</div>
+        <h3>It Went Global and Got Worse 🌍</h3>
+        <p>Forbes helpfully expanded to Africa, Asia, and Europe, thoughtfully exporting the entire adverse selection mechanism to new continents. Obinwanne Okeke used Forbes Africa recognition as cover for an $11M cybercrime syndicate and wrote entrepreneurship columns while running it. Gökçe Güven made the 2025 list and was indicted almost immediately. The pipeline is not a quirk of American capitalism. It is structural. It is a feature not a bug. We're so tired.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Hot Take (Lukewarm, Actually. Room Temperature.):</strong> The era of free money is over, rates are up, and VCs are theoretically doing due diligence again. But the structural incentives that made this happen — a media franchise that profits from celebrating youth and disruption, a VC ecosystem that uses press coverage as a proxy for auditing, and a culture that mistakes arrogance for genius — are all still completely intact. The pipeline will continue. We will update this dashboard accordingly. We are not hopeful.
+    </div>
+
+    <!-- Secondary chart: fraud sources deep dive -->
+    <div class="section-header" style="margin-top:40px">
+      <h2 class="section-title" style="font-size:1.3rem">Forbes' Official "Oops, Our Bad" List vs. The Full Extended Cinematic Universe</h2>
+      <p class="section-desc" style="max-width:none">In 2023, Forbes published a <em>mea culpa</em> naming 10 of its most "dubious" honorees — which they presented as evidence of the system working. Below: the official 10 (✦) alongside the expanded universe that didn't make the magazine's self-imposed apologetics list. Click any row. Feel things.</p>
+    </div>
+    <div style="overflow-x:auto">
+      <table style="min-width:640px">
+        <thead>
+          <tr>
+            <th>Honoree</th>
+            <th>Year</th>
+            <th>Company</th>
+            <th>Fraud Type</th>
+            <th>Outcome</th>
+            <th>Official HoS</th>
+          </tr>
+        </thead>
+        <tbody id="hos-table"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══════════════════════════════════════
+     MODAL
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-avatar"></div>
+      <div class="modal-title-group">
+        <div class="modal-name"></div>
+        <div class="modal-alias"></div>
+        <div class="modal-company"></div>
+      </div>
+      <button class="modal-close">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-grid"></div>
+      <div class="modal-desc-title">What Actually Happened ™</div>
+      <p class="modal-desc"></p>
+      <div style="margin-top:16px">
+        <div class="modal-desc-title">Official Legal Outcome (Per Actual Courts, Not Forbes)</div>
+        <p class="modal-outcome" style="font-size:13px;color:var(--amber);font-weight:500;margin-top:6px"></p>
+      </div>
+      <div class="modal-tags"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer>
+  <strong>30 Under 30 Prison Pipeline Dashboard</strong> · Kept painfully up to date · Last despair: February 2026
+  <br/>All data sourced from federal court records, SEC filings, DOJ press releases, and the kind of investigative journalism that makes you stare at the ceiling at 2am.
+  <br/><em>Educational use only. If you are a Forbes 30 Under 30 honoree reading this: hello. Please don't steal anything. We're begging you. We are so tired.</em>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+  // Build Hall of Shame table
+  const HOS_OFFICIAL = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // IDs of Hall of Shame entries
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const tbody = document.getElementById('hos-table');
+    if (!tbody) return;
+    tbody.innerHTML = FRAUDSTERS.map(f => {
+      const isHoS = HOS_OFFICIAL.includes(f.id);
+      const sc = getStatusClass(f.legalStatus);
+      return `
+        <tr data-id="${f.id}" style="cursor:pointer" onclick="openModal(${f.id})">
+          <td class="name-cell">${f.name}</td>
+          <td>${f.year}</td>
+          <td>${f.company}</td>
+          <td style="font-size:12px;color:var(--text-secondary)">${f.fraudType.slice(0,2).join(', ')}</td>
+          <td><span class="status-badge status-${sc}">${f.legalStatus.split('(')[0].trim()}</span></td>
+          <td style="text-align:center">${isHoS
+            ? '<span style="color:var(--red-light);font-size:16px" title="Official Hall of Shame">✦</span>'
+            : '<span style="color:var(--text-muted);font-size:12px">—</span>'
+          }</td>
+        </tr>`;
+    }).join('');
+  });
+</script>
+</body>
+</html>
